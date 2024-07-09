@@ -13,11 +13,11 @@ import {
 import { TypedUseSelectorHook, useDispatch, useSelector } from 'react-redux'
 import autoMergeLevel2 from 'redux-persist/es/stateReconciler/autoMergeLevel2'
 import { reduxStorage } from '@/utils/storage'
-import toDo from './toDo'
 import reactotron from '../../ReactotronConfig'
+import { baseApi } from '@/services'
 
 export const reducers = combineReducers({
-	toDo,
+	[baseApi.reducerPath]: baseApi.reducer,
 })
 
 export type RootState = ReturnType<typeof reducers>
@@ -26,8 +26,8 @@ const persistConfig: any = {
 	key: 'root',
 	storage: reduxStorage,
 	version: 1,
-	whiteList: ['toDo'],
-	blacklist: [],
+	whiteList: [],
+	blacklist: ['baseApi'],
 	stateReconciler: autoMergeLevel2,
 }
 
@@ -48,13 +48,13 @@ export const setupStore = () => {
 						REGISTER,
 					],
 				},
-			})
+			}).concat(baseApi.middleware)
 
 			return middlewares
 		},
-		enhancers: getDefaultEnhancers => {
-			return getDefaultEnhancers().concat(reactotron.createEnhancer!())
-		},
+		// enhancers: getDefaultEnhancers => {
+		// 	return getDefaultEnhancers().concat(reactotron.createEnhancer!())
+		// },
 	})
 }
 

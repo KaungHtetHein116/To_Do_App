@@ -1,11 +1,13 @@
 import Reactotron, { networking } from 'reactotron-react-native'
 import { reactotronRedux } from 'reactotron-redux'
+import apisaucePlugin from 'reactotron-apisauce' //
 
-const reactotron = Reactotron.configure() // controls connection & communication settings
+const reactotron = Reactotron.configure()
 	.configure({ name: 'React Native Todo' })
-	.useReactNative() // add all built-in react native plugins
+	.use(apisaucePlugin({}))
+	.useReactNative()
 	.use(networking())
 	.use(reactotronRedux())
-	.connect() // let's connect!
+	.connect()
 
 export default reactotron

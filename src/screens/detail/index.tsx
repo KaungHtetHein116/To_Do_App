@@ -1,4 +1,10 @@
-import { FormTextInput, Header, PrimaryButton, SafeView } from '@/components'
+import {
+	FormTextInput,
+	Header,
+	LoadingIndicator,
+	PrimaryButton,
+	SafeView,
+} from '@/components'
 import { HomeStackNavigatorParam } from '@/navigators/types'
 import { commonStyles, gutters, layout } from '@/theme'
 import { NativeStackScreenProps } from '@react-navigation/native-stack'
@@ -15,12 +21,14 @@ const Detail = ({
 }: NativeStackScreenProps<HomeStackNavigatorParam, 'DETAIL'>) => {
 	const {
 		control,
-		defaultValue,
 		isDirty,
 		onPressSave,
 		colorTag,
 		setColorTag,
 		title,
+		isLoading,
+		data,
+		isToDoLoading,
 	} = useDetail({
 		id: route.params?.id,
 	})
@@ -28,35 +36,40 @@ const Detail = ({
 	return (
 		<SafeView>
 			<Header title={title} />
-			<View style={[commonStyles.regularPadding, commonStyles.fill]}>
-				<FormTextInput
-					control={control}
-					name="title"
-					defaultValue={defaultValue?.title}
-					containerStyle={gutters.regularBMargin}
-					placeholder="Title"
-				/>
-				<FormTextInput
-					control={control}
-					name="description"
-					defaultValue={defaultValue?.description}
-					style={homeStyles.descriptionInput}
-					containerStyle={gutters.xLargeBMargin}
-					placeholder="Description"
-				/>
-				<ColorList colorTag={colorTag} setColorTag={setColorTag} />
-				<PrimaryButton
-					label="Save"
-					style={[
-						layout.selfCenter,
-						gutters.xLargeTMargin,
-						{ backgroundColor: LightAppColors.argentanianBlue },
-					]}
-					onPress={onPressSave}
-					labelStyle={detailStyles.labelStyle}
-					disabled={!isDirty}
-				/>
-			</View>
+			{isToDoLoading ? (
+				<LoadingIndicator />
+			) : (
+				<View style={[commonStyles.regularPadding, commonStyles.fill]}>
+					<FormTextInput
+						control={control}
+						name="title"
+						containerStyle={gutters.regularBMargin}
+						placeholder="Title"
+						defaultValue={data?.todo?.title}
+					/>
+					<FormTextInput
+						control={control}
+						name="description"
+						style={homeStyles.descriptionInput}
+						containerStyle={gutters.xLargeBMargin}
+						placeholder="Description"
+						defaultValue={data?.todo?.description}
+					/>
+					<ColorList colorTag={colorTag} setColorTag={setColorTag} />
+					<PrimaryButton
+						label="Save"
+						style={[
+							layout.selfCenter,
+							gutters.xLargeTMargin,
+							{ backgroundColor: LightAppColors.argentanianBlue },
+						]}
+						onPress={onPressSave}
+						labelStyle={detailStyles.labelStyle}
+						disabled={!isDirty}
+						isLoading={isLoading}
+					/>
+				</View>
+			)}
 		</SafeView>
 	)
 }

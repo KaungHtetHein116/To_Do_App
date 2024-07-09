@@ -1,16 +1,16 @@
-import { View } from 'react-native'
+import { RefreshControl, View } from 'react-native'
 import React from 'react'
 import ToDoItem from './ToDoItem'
-import { useToDo } from '@/store/hooks'
-import { Typography } from '@/components'
+import { LoadingIndicator, Typography } from '@/components'
 import { commonStyles } from '@/theme'
-import { IToDoItem } from '@/store/toDo/types'
 import Animated, { LinearTransition } from 'react-native-reanimated'
 import { useHomeAnimation } from '@/context/HomeAnimationProvider'
 import homeStyles from '../home.styles'
+import { useGetToDosQuery } from '@/services/toDos'
+import { IToDoItem } from '@/services/toDos/types'
 
 const ToDoList = () => {
-	const { toDolist } = useToDo()
+	const { data, isLoading, refetch } = useGetToDosQuery()
 	const { scrollHandler } = useHomeAnimation()
 
 	const renderItem = ({
@@ -23,6 +23,8 @@ const ToDoList = () => {
 		return <ToDoItem item={item} index={index} />
 	}
 
+	if (isLoading) return <LoadingIndicator />
+
 	return (
 		<Animated.FlatList
 			contentInsetAdjustmentBehavior={'automatic'}
@@ -33,15 +35,18 @@ const ToDoList = () => {
 				commonStyles.xxLargeBMargin,
 			]}
 			style={[commonStyles.fill, commonStyles.flexGrow]}
-			data={toDolist}
+			data={data?.todos}
 			renderItem={renderItem}
 			showsVerticalScrollIndicator={false}
 			keyExtractor={item => item.id}
 			ListFooterComponent={<View style={[homeStyles.bottomGap]} />}
 			ListEmptyComponent={
-				<View style={[commonStyles.fill, commonStyles.center]}>
+				<View style={[commonStyles.center]}>
 					<Typography>{'All clear !!!'}</Typography>
 				</View>
+			}
+			refreshControl={
+				<RefreshControl refreshing={false} onRefresh={refetch} />
 			}
 		/>
 	)

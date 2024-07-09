@@ -9,7 +9,7 @@ const ColorList = ({
 	colorTag,
 	setColorTag,
 }: {
-	colorTag: string
+	colorTag?: string
 	setColorTag: (v: string) => void
 }) => {
 	return (

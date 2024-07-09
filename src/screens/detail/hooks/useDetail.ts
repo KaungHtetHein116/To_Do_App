@@ -1,12 +1,13 @@
 import { useForm } from 'react-hook-form'
 import * as Yup from 'yup'
 import { yupResolver } from '@hookform/resolvers/yup'
-import { useDispatch } from 'react-redux'
-import { addTodo, updateTodo } from '@/store/toDo'
 import { useNavigation } from '@react-navigation/native'
-import { useToDo } from '@/store/hooks'
-import { useMemo, useState } from 'react'
-import { IToDoItem } from '@/store/toDo/types'
+import { useEffect, useMemo, useState } from 'react'
+import {
+	useAddToDoMutation,
+	useGetToDoQuery,
+	useUpdateToDoMutation,
+} from '@/services/toDos'
 
 const resolver = yupResolver(
 	Yup.object().shape({
@@ -22,44 +23,49 @@ const resolver = yupResolver(
 )
 
 const useDetail = ({ id }: { id?: string }) => {
+	const [colorTag, setColorTag] = useState('#FBFEFB')
 	const {
 		control,
 		handleSubmit,
 		formState: { isDirty },
 	} = useForm({ resolver })
 	const navigation = useNavigation()
-	const dispatch = useDispatch()
-	const { toDolist } = useToDo()
+	const [addToDo, { isLoading: isAdding }] = useAddToDoMutation()
+	const [updateToDo, { isLoading: isUpdating }] = useUpdateToDoMutation()
+	const { data, isFetching: isToDoLoading } = useGetToDoQuery(id!, {
+		skip: Boolean(!id),
+	})
 	const title = useMemo(() => (id ? 'Update' : 'Create'), [])
 
-	const defaultValue = useMemo(
-		() =>
-			id
-				? toDolist.find(value => value.id === id)
-				: { title: '', description: '', color: '#FBFEFB' },
-		[id],
-	) as IToDoItem
-
-	const [colorTag, setColorTag] = useState(defaultValue?.color)
-
 	const onPressSave = handleSubmit(values => {
-		const { description, title } = values
-		dispatch(
-			id
-				? updateTodo({ id, description, color: colorTag, title })
-				: addTodo({ color: colorTag, description, title }),
-		)
+		id
+			? updateToDo({
+					id,
+					color: colorTag,
+					...values,
+			  })
+			: addToDo({
+					color: colorTag,
+					...values,
+			  })
+
 		navigation.goBack()
 	})
 
+	useEffect(() => {
+		if (data?.todo?.color) setColorTag(data?.todo?.color)
+	}, [data?.todo?.color])
+
 	return {
 		control,
-		defaultValue,
 		isDirty,
 		onPressSave,
 		colorTag,
 		setColorTag,
 		title,
+		isLoading: isAdding || isUpdating,
+		isToDoLoading,
+		data,
 	}
 }
 

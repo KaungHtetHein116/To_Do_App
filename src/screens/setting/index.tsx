@@ -2,13 +2,12 @@ import React, { useCallback } from 'react'
 import commonStyles from '@/theme/commonStyles'
 import { PrimaryButton, SafeView } from '@/components'
 import settingStyles from './setting.styles'
-import { useDispatch } from 'react-redux'
-import { clearTodos } from '@/store/toDo'
+import { useDeleteAllToDoMutation } from '@/services/toDos'
 
 const Setting = () => {
-	const dispatch = useDispatch()
+	const [deleteAll] = useDeleteAllToDoMutation()
 	const onPress = useCallback(() => {
-		dispatch(clearTodos())
+		deleteAll()
 	}, [])
 
 	return (
