@@ -5,13 +5,18 @@ import { useDispatch } from 'react-redux'
 import { addTodo, updateTodo } from '@/store/toDo'
 import { useNavigation } from '@react-navigation/native'
 import { useToDo } from '@/store/hooks'
-import { useMemo } from 'react'
+import { useMemo, useState } from 'react'
+import { IToDoItem } from '@/store/toDo/types'
 
 const resolver = yupResolver(
 	Yup.object().shape({
-		toDo: Yup.string()
-			.required('Please enter your description.')
-			.min(5, 'Your description must be at least 5 characters long')
+		title: Yup.string()
+			.required('Please enter title.')
+			.min(5, 'Title must be at least 5 characters long.')
+			.trim(),
+		description: Yup.string()
+			.required('Please enter description.')
+			.min(5, 'Description must be at least 5 characters long.')
 			.trim(),
 	}),
 )
@@ -22,24 +27,28 @@ const useDetail = ({ id }: { id?: string }) => {
 		handleSubmit,
 		formState: { isDirty },
 	} = useForm({ resolver })
-	const { toDolist } = useToDo()
 	const navigation = useNavigation()
+	const dispatch = useDispatch()
+	const { toDolist } = useToDo()
+	const title = useMemo(() => (id ? 'Update' : 'Create'), [])
 
 	const defaultValue = useMemo(
 		() =>
-			id ? toDolist.find(value => value.id === id)?.description : null,
+			id
+				? toDolist.find(value => value.id === id)
+				: { title: '', description: '', color: '#FBFEFB' },
 		[id],
-	)
+	) as IToDoItem
 
-	const dispatch = useDispatch()
+	const [colorTag, setColorTag] = useState(defaultValue?.color)
 
 	const onPressSave = handleSubmit(values => {
+		const { description, title } = values
 		dispatch(
 			id
-				? updateTodo({ id, description: values.toDo })
-				: addTodo({ description: values.toDo }),
+				? updateTodo({ id, description, color: colorTag, title })
+				: addTodo({ color: colorTag, description, title }),
 		)
-
 		navigation.goBack()
 	})
 
@@ -48,6 +57,9 @@ const useDetail = ({ id }: { id?: string }) => {
 		defaultValue,
 		isDirty,
 		onPressSave,
+		colorTag,
+		setColorTag,
+		title,
 	}
 }
 

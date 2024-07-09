@@ -1,20 +1,26 @@
-import { TextInput } from 'react-native'
+import { StyleProp, TextInput, View, ViewStyle } from 'react-native'
 import React from 'react'
-import baseTextInputStyles from './formTextInput.styles'
+import formTextInputStyles from './formTextInput.styles'
 import { useController } from 'react-hook-form'
 import { ErrorMessage } from '@hookform/error-message'
 import Typography from '../Typography'
 import { gutters } from '@/theme'
 
-const BaseTextInput = ({
+interface IFormTextInput extends React.ComponentProps<typeof TextInput> {
+	name: string
+	control: any
+	defaultValue?: string
+	containerStyle?: StyleProp<ViewStyle>
+}
+
+const FormTextInput = ({
 	name,
 	control,
 	defaultValue,
-}: {
-	name: string
-	control: any
-	defaultValue?: string | null
-}) => {
+	containerStyle,
+	style,
+	...props
+}: IFormTextInput) => {
 	const {
 		field: { onChange, value, ref },
 		formState: { errors },
@@ -26,29 +32,34 @@ const BaseTextInput = ({
 
 	const renderErrorMessage = ({ message }: { message: string }) => {
 		return (
-			<Typography variant="error" style={gutters.regularTMargin}>
+			<Typography
+				variant="body3"
+				style={gutters.regularTMargin}
+				color="rustyRed"
+			>
 				{message}
 			</Typography>
 		)
 	}
 
 	return (
-		<>
+		<View style={containerStyle}>
 			<TextInput
 				placeholder="Enter here"
 				multiline
-				style={baseTextInputStyles.textInput}
+				style={[formTextInputStyles.textInput, style]}
 				onChangeText={onChange}
 				value={value}
 				ref={ref}
+				{...props}
 			/>
 			<ErrorMessage
 				name={name}
 				errors={errors}
 				render={renderErrorMessage}
 			/>
-		</>
+		</View>
 	)
 }
 
-export default BaseTextInput
+export default FormTextInput

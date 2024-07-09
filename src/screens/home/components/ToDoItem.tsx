@@ -6,93 +6,107 @@ import React from 'react'
 import { Image, Pressable, View } from 'react-native'
 import homeStyles from '../home.styles'
 import useToDoItem from '../hooks/useToDoItem'
+import { formatDate } from '@/utils/date'
+import { Swipeable } from 'react-native-gesture-handler'
+import { LightAppColors } from '@/theme/variables'
+import Animated, { FadeInLeft, FadeOutLeft } from 'react-native-reanimated'
 
 const ToDoItem = ({ item, index }: { item: IToDoItem; index: number }) => {
 	const { onPressCheckIcon, onPressDelete, onPressEdit } = useToDoItem({
 		id: item.id,
 	})
 
+	const renderRightActions = () => {
+		return (
+			<Pressable
+				onPress={onPressDelete}
+				style={[
+					commonStyles.center,
+					commonStyles.largeBMargin,
+					commonStyles.xLargePadding,
+					homeStyles.rightAction,
+				]}
+			>
+				<Image
+					source={Icons.trash}
+					style={commonStyles.icon}
+					tintColor={LightAppColors.white}
+				/>
+			</Pressable>
+		)
+	}
+
 	return (
-		<View style={[commonStyles.rowHCenter, layout.justifyContentBetween]}>
-			<View style={[commonStyles.rowHCenter, gutters.regularRMargin]}>
-				<Pressable
-					style={[commonStyles.rowHCenter, { flex: 0.8 }]}
-					onPress={onPressCheckIcon}
+		<View
+			style={{
+				opacity: item.isCompleted ? 0.5 : 1,
+			}}
+		>
+			<Animated.View
+				entering={FadeInLeft.delay(200 * index)}
+				exiting={FadeOutLeft.delay(200)}
+			>
+				<Swipeable
+					renderRightActions={renderRightActions}
+					useNativeAnimations
+					friction={2}
+					overshootRight={false}
+					shouldCancelWhenOutside
 				>
-					<Image
-						source={item.isCompleted ? Icons.checked : Icons.check}
-						style={homeStyles.icon}
-					/>
-					<Typography
-						variant="title1"
-						style={{
-							textDecorationLine: item.isCompleted
-								? 'line-through'
-								: 'none',
-						}}
-						numberOfLines={1}
+					<Pressable
+						onPress={onPressEdit}
+						style={[
+							gutters.regularPadding,
+							commonStyles.regularBorderRadius,
+							commonStyles.smallShadow,
+							commonStyles.largeBMargin,
+							commonStyles.regularHMargin,
+							{
+								backgroundColor: item.color,
+							},
+						]}
 					>
-						{`${index + 1}. ${item.description}`}
-					</Typography>
-				</Pressable>
-			</View>
-			<Pressable onPress={onPressEdit}>
-				<Image source={Icons.edit} style={homeStyles.icon} />
-			</Pressable>
-			<Pressable onPress={onPressDelete}>
-				<Image source={Icons.trash} style={homeStyles.icon} />
-			</Pressable>
+						<View
+							style={[
+								gutters.largeBMargin,
+								layout.rowHCenter,
+								layout.justifyContentBetween,
+							]}
+						>
+							<Typography
+								color="highEmphasis"
+								variant="headline1"
+								style={[homeStyles.itemTitle]}
+								numberOfLines={1}
+							>
+								{item.title}
+							</Typography>
+							<Pressable onPress={onPressCheckIcon}>
+								<Image
+									source={
+										item.isCompleted
+											? Icons.checked
+											: Icons.check
+									}
+									style={[homeStyles.icon]}
+								/>
+							</Pressable>
+						</View>
+						<Typography
+							variant="caption1"
+							style={[gutters.xLargeBMargin]}
+							color="mediumEmphasis"
+						>
+							{item.description}
+						</Typography>
+						<Typography variant="caption2" color="lowEmphasis">
+							{`Created at ${formatDate(item.id)}`}
+						</Typography>
+					</Pressable>
+				</Swipeable>
+			</Animated.View>
 		</View>
 	)
 }
 
 export default ToDoItem
-// import Icons from '@/assets/icons'
-// import { Typography } from '@/components'
-// import { IToDoItem } from '@/store/toDo/types'
-// import { commonStyles, gutters, layout } from '@/theme'
-// import React from 'react'
-// import { Image, Pressable, View } from 'react-native'
-// import homeStyles from '../home.styles'
-// import useToDoItem from '../hooks/useToDoItem'
-
-// const ToDoItem = ({ item, index }: { item: IToDoItem; index: number }) => {
-// 	const { onPressCheckIcon, onPressDelete, onPressEdit } = useToDoItem({
-// 		id: item.id,
-// 	})
-
-// 	return (
-// 		<View style={[commonStyles.rowHCenter, layout.justifyContentBetween]}>
-// 			<View style={[commonStyles.rowHCenter, gutters.regularRMargin]}>
-// 				<Pressable
-// 					style={[commonStyles.rowHCenter, { flex: 0.8 }]}
-// 					onPress={onPressCheckIcon}
-// 				>
-// 					<Image
-// 						source={item.isCompleted ? Icons.checked : Icons.check}
-// 						style={homeStyles.icon}
-// 					/>
-// 					<Typography
-// 						variant="title1"
-// 						style={{
-// 							textDecorationLine: item.isCompleted
-// 								? 'line-through'
-// 								: 'none',
-// 						}}
-// 						numberOfLines={1}
-// 					>
-// 						{`${index + 1}. ${item.description}`}
-// 					</Typography>
-// 				</Pressable>
-// 			</View>
-// 			<Pressable onPress={onPressEdit}>
-// 				<Image source={Icons.edit} style={homeStyles.icon} />
-// 			</Pressable>
-// 			<Pressable onPress={onPressDelete}>
-// 				<Image source={Icons.trash} style={homeStyles.icon} />
-// 			</Pressable>
-// 		</View>
-// 	)
-// }
-
-// export default ToDoItem

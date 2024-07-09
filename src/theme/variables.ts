@@ -7,6 +7,15 @@ export const LightAppColors = {
 	lowEmphasis: '#AAAAAA',
 	disableEmphasis: '#B6B6B6',
 	whiteHighEmphasis: '#FFFFFF',
+	white: '#FFFFFF',
+	cosmicLatte: '#FFF8E8',
+	jasmine: '#FCD581',
+	rustyRed: '#D51941',
+	claret: '#990D35',
+	shadow: '#000000',
+	atomicTemgerin: '#DA627D',
+	argentanianBlue: '#35A7FF',
+	orange: 'orange',
 }
 
 export const FontSize = {

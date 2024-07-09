@@ -12,13 +12,19 @@ const toDoSlice = createSlice({
 		addTodo: (
 			state,
 			{
-				payload: { description },
-			}: PayloadAction<{ description: string }>,
+				payload: { title, description, color },
+			}: PayloadAction<{
+				title: string
+				description: string
+				color: string
+			}>,
 		) => {
-			state.toDolist.push({
+			state.toDolist.unshift({
 				id: new Date().toISOString(),
-				description: description,
+				description,
 				isCompleted: false,
+				title,
+				color,
 			})
 		},
 		removeTodo: (
@@ -38,12 +44,19 @@ const toDoSlice = createSlice({
 		},
 		updateTodo: (
 			state,
-			action: PayloadAction<{ id: string; description: string }>,
+			action: PayloadAction<{
+				id: string
+				title: string
+				description: string
+				color: string
+			}>,
 		) => {
-			const { id, description } = action.payload
+			const { id, description, title, color } = action.payload
 			const todo = state.toDolist.find(todo => todo.id === id)
 			if (todo) {
 				todo.description = description
+				todo.title = title
+				todo.color = color
 			}
 		},
 		clearTodos: state => {

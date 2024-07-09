@@ -16,15 +16,18 @@ const HomeStackNavigator = () => {
 				<Stack.Screen
 					name={TAB_NAVIGATOR}
 					component={TabNavigator}
-					options={{ headerShown: false }}
+					options={{
+						headerLargeTitle: true,
+						headerTransparent: true,
+						headerShown: true,
+						headerTitle: 'To Do List',
+					}}
 				/>
 				<Stack.Screen
 					name={DETAIL}
 					component={DetailScreen}
 					options={{
-						headerBackTitleVisible: false,
-						headerTitle: 'Detail',
-						presentation: 'modal',
+						headerShown: false,
 					}}
 				/>
 			</Stack.Navigator>

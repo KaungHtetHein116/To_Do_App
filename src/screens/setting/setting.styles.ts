@@ -5,6 +5,9 @@ const settingStyles = StyleSheet.create({
 	buttonLabel: {
 		color: LightAppColors.whiteHighEmphasis,
 	},
+	removeButton: {
+		backgroundColor: LightAppColors.rustyRed,
+	},
 })
 
 export default settingStyles

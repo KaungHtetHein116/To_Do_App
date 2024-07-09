@@ -1,5 +1,5 @@
 import { StyleSheet } from 'react-native'
-import { MetricsSizes, RadiusSizes } from './variables'
+import { LightAppColors, MetricsSizes, RadiusSizes } from './variables'
 
 const commonStyles = StyleSheet.create({
 	/* Column Layouts */
@@ -489,6 +489,43 @@ const commonStyles = StyleSheet.create({
 	},
 	xxxLargePadding: {
 		padding: MetricsSizes.xxxLarge,
+	},
+	icon: {
+		width: 16,
+		height: 16,
+	},
+	smallShadow: {
+		shadowColor: LightAppColors.shadow,
+		shadowOffset: {
+			width: 1,
+			height: 1,
+		},
+		shadowOpacity: 0.2,
+		shadowRadius: 4.65,
+
+		elevation: 8,
+	},
+	mediumShadow: {
+		shadowColor: LightAppColors.shadow,
+		shadowOffset: {
+			width: 0,
+			height: 3,
+		},
+		shadowOpacity: 0.2,
+		shadowRadius: 3.27,
+
+		elevation: 10,
+	},
+	largeShadow: {
+		shadowColor: LightAppColors.shadow,
+		shadowOffset: {
+			width: 0,
+			height: 7,
+		},
+		shadowOpacity: 0.43,
+		shadowRadius: 9.51,
+
+		elevation: 15,
 	},
 })
 

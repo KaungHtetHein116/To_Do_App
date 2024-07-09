@@ -4,12 +4,16 @@ import { persistor, store } from './store'
 import HomeStackNavigator from './navigators/stackNavigators/HomeStackNavigator'
 import { PersistGate } from 'redux-persist/integration/react'
 import { ActivityIndicator } from 'react-native'
+import { GestureHandlerRootView } from 'react-native-gesture-handler'
+import { commonStyles } from './theme'
 
 const App = () => {
 	return (
 		<Provider store={store}>
 			<PersistGate loading={<ActivityIndicator />} persistor={persistor}>
-				<HomeStackNavigator />
+				<GestureHandlerRootView style={[commonStyles.fill]}>
+					<HomeStackNavigator />
+				</GestureHandlerRootView>
 			</PersistGate>
 		</Provider>
 	)

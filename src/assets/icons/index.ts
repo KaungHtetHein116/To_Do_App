@@ -5,6 +5,7 @@ const Icons = {
 	home: require('./home.png'),
 	setting: require('./setting.png'),
 	edit: require('./edit.png'),
+	back: require('./back.png'),
 }
 
 export default Icons
