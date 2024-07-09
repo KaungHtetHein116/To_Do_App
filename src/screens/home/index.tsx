@@ -3,7 +3,6 @@ import HomeAnimationProvider from '@/context/HomeAnimationProvider'
 import React from 'react'
 import AnimatedButton from './components/AnimatedButton'
 import ToDoList from './components/ToDoList'
-import AnimatedTitle from './components/AnimatedTitle'
 
 const Home = () => {
 	return (

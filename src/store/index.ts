@@ -14,6 +14,7 @@ import { TypedUseSelectorHook, useDispatch, useSelector } from 'react-redux'
 import autoMergeLevel2 from 'redux-persist/es/stateReconciler/autoMergeLevel2'
 import { reduxStorage } from '@/utils/storage'
 import toDo from './toDo'
+import reactotron from '../../ReactotronConfig'
 
 export const reducers = combineReducers({
 	toDo,
@@ -50,6 +51,9 @@ export const setupStore = () => {
 			})
 
 			return middlewares
+		},
+		enhancers: getDefaultEnhancers => {
+			return getDefaultEnhancers().concat(reactotron.createEnhancer!())
 		},
 	})
 }
