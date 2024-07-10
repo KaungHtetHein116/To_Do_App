@@ -1,12 +1,8 @@
 import { useForm } from 'react-hook-form'
 import * as Yup from 'yup'
 import { yupResolver } from '@hookform/resolvers/yup'
-import { useDispatch } from 'react-redux'
-import { addTodo, updateTodo } from '@/store/toDo'
 import { useNavigation } from '@react-navigation/native'
-import { useToDo } from '@/store/hooks'
 import { useMemo, useState } from 'react'
-import { IToDoItem } from '@/store/toDo/types'
 
 const resolver = yupResolver(
 	Yup.object().shape({
@@ -28,27 +24,14 @@ const useDetail = ({ id }: { id?: string }) => {
 		formState: { isDirty },
 	} = useForm({ resolver })
 	const navigation = useNavigation()
-	const dispatch = useDispatch()
-	const { toDolist } = useToDo()
 	const title = useMemo(() => (id ? 'Update' : 'Create'), [])
 
-	const defaultValue = useMemo(
-		() =>
-			id
-				? toDolist.find(value => value.id === id)
-				: { title: '', description: '', color: '#FBFEFB' },
-		[id],
-	) as IToDoItem
+	const defaultValue = {}
 
-	const [colorTag, setColorTag] = useState(defaultValue?.color)
+	const [colorTag, setColorTag] = useState()
 
 	const onPressSave = handleSubmit(values => {
 		const { description, title } = values
-		dispatch(
-			id
-				? updateTodo({ id, description, color: colorTag, title })
-				: addTodo({ color: colorTag, description, title }),
-		)
 		navigation.goBack()
 	})
 

@@ -2,14 +2,9 @@ import React, { useCallback } from 'react'
 import commonStyles from '@/theme/commonStyles'
 import { PrimaryButton, SafeView } from '@/components'
 import settingStyles from './setting.styles'
-import { useDispatch } from 'react-redux'
-import { clearTodos } from '@/store/toDo'
 
 const Setting = () => {
-	const dispatch = useDispatch()
-	const onPress = useCallback(() => {
-		dispatch(clearTodos())
-	}, [])
+	const onPress = useCallback(() => {}, [])
 
 	return (
 		<SafeView style={[commonStyles.center]}>
