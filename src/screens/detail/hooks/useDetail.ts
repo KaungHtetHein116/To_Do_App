@@ -24,6 +24,7 @@ const useDetail = ({ id }: { id?: string }) => {
 	const { mutate: addTodo, isPending: isAddLoading } = useAddTodo()
 	const { mutate: updateTodo, isPending: isUpdateLoading } = useUpdateTodo()
 	const {
+		reset,
 		control,
 		handleSubmit,
 		formState: { isDirty },
@@ -58,12 +59,14 @@ const useDetail = ({ id }: { id?: string }) => {
 	}
 
 	useEffect(() => {
-		if (data?.color) setColorTag(data.color)
+		if (data) {
+			setColorTag(data.color)
+			reset(data)
+		}
 	}, [data])
 
 	return {
 		control,
-		defaultValue: data,
 		isDirty,
 		onPressSave,
 		colorTag,

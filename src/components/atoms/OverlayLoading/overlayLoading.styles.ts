@@ -6,6 +6,7 @@ const overlayLoadingStyles = StyleSheet.create({
 		justifyContent: 'center',
 		alignItems: 'center',
 		zIndex: 1,
+		backgroundColor: 'rgba(0, 0, 0, 0.4)',
 	},
 })
 

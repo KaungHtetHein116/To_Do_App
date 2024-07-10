@@ -1,7 +1,7 @@
 import {
 	FormTextInput,
 	Header,
-	LoadingIndicator,
+	OverlayLoading,
 	PrimaryButton,
 	SafeView,
 } from '@/components'
@@ -21,7 +21,6 @@ const Detail = ({
 }: NativeStackScreenProps<HomeStackNavigatorParam, 'DETAIL'>) => {
 	const {
 		control,
-		defaultValue,
 		isDirty,
 		onPressSave,
 		colorTag,
@@ -33,23 +32,20 @@ const Detail = ({
 		id: route.params?.id,
 	})
 
-	if (isLoading) return <LoadingIndicator />
-
 	return (
 		<SafeView>
+			<OverlayLoading isVisible={isLoading} />
 			<Header title={title} />
 			<View style={[commonStyles.regularPadding, commonStyles.fill]}>
 				<FormTextInput
 					control={control}
 					name="title"
-					defaultValue={defaultValue?.title}
 					containerStyle={gutters.regularBMargin}
 					placeholder="Title"
 				/>
 				<FormTextInput
 					control={control}
 					name="description"
-					defaultValue={defaultValue?.description}
 					style={homeStyles.descriptionInput}
 					containerStyle={gutters.xLargeBMargin}
 					placeholder="Description"
