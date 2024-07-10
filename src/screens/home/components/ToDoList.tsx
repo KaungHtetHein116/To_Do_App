@@ -6,9 +6,11 @@ import { commonStyles } from '@/theme'
 import Animated, { LinearTransition } from 'react-native-reanimated'
 import { useHomeAnimation } from '@/context/HomeAnimationProvider'
 import homeStyles from '../home.styles'
+import { useTodos } from '@/api/hooks/useToDos'
 
 const ToDoList = () => {
 	const { scrollHandler } = useHomeAnimation()
+	const { data, isLoading } = useTodos()
 
 	const renderItem = ({ item, index }: { item: any; index: number }) => {
 		return <ToDoItem item={item} index={index} />
@@ -24,7 +26,7 @@ const ToDoList = () => {
 				commonStyles.xxLargeBMargin,
 			]}
 			style={[commonStyles.fill, commonStyles.flexGrow]}
-			data={[]}
+			data={data}
 			renderItem={renderItem}
 			showsVerticalScrollIndicator={false}
 			keyExtractor={item => item.id}

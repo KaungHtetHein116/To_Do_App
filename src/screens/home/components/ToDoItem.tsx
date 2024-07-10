@@ -1,6 +1,5 @@
 import Icons from '@/assets/icons'
 import { Typography } from '@/components'
-import { IToDoItem } from '@/store/toDo/types'
 import { commonStyles, gutters, layout } from '@/theme'
 import React from 'react'
 import { Image, Pressable, View } from 'react-native'
@@ -10,8 +9,9 @@ import { formatDate } from '@/utils/date'
 import { Swipeable } from 'react-native-gesture-handler'
 import { LightAppColors } from '@/theme/variables'
 import Animated, { FadeInLeft, FadeOutLeft } from 'react-native-reanimated'
+import { ITodo } from '@/api/axios/types'
 
-const ToDoItem = ({ item, index }: { item: IToDoItem; index: number }) => {
+const ToDoItem = ({ item, index }: { item: ITodo; index: number }) => {
 	const { onPressCheckIcon, onPressDelete, onPressEdit } = useToDoItem({
 		id: item.id,
 	})
