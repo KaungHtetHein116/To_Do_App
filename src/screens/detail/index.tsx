@@ -13,15 +13,7 @@ import { LightAppColors } from '@/theme/variables'
 const Detail = ({
 	route,
 }: NativeStackScreenProps<HomeStackNavigatorParam, 'DETAIL'>) => {
-	const {
-		control,
-		defaultValue,
-		isDirty,
-		onPressSave,
-		colorTag,
-		setColorTag,
-		title,
-	} = useDetail({
+	const { control, defaultValue, isDirty, onPressSave, title } = useDetail({
 		id: route.params?.id,
 	})
 
@@ -44,7 +36,7 @@ const Detail = ({
 					containerStyle={gutters.xLargeBMargin}
 					placeholder="Description"
 				/>
-				<ColorList colorTag={colorTag} setColorTag={setColorTag} />
+				<ColorList control={control} name={'color'} />
 				<PrimaryButton
 					label="Save"
 					style={[
