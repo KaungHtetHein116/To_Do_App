@@ -34,6 +34,7 @@ const PrimaryButton = ({
 				style,
 				disabled && primaryButtonStyles.disabledStyle,
 			]}
+			disabled={disabled || isLoading}
 			{...props}
 		>
 			{isLoading ? (
