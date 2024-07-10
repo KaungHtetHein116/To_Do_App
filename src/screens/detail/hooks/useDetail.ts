@@ -2,7 +2,8 @@ import { useForm } from 'react-hook-form'
 import * as Yup from 'yup'
 import { yupResolver } from '@hookform/resolvers/yup'
 import { useNavigation } from '@react-navigation/native'
-import { useMemo, useState } from 'react'
+import { useEffect, useMemo, useState } from 'react'
+import { useAddTodo, useTodo, useUpdateTodo } from '@/api/hooks/useToDos'
 
 const resolver = yupResolver(
 	Yup.object().shape({
@@ -18,6 +19,10 @@ const resolver = yupResolver(
 )
 
 const useDetail = ({ id }: { id?: string }) => {
+	const [colorTag, setColorTag] = useState('#FBFEFB')
+	const { data, isLoading } = useTodo(id)
+	const { mutate: addTodo, isPending: isAddLoading } = useAddTodo()
+	const { mutate: updateTodo, isPending: isUpdateLoading } = useUpdateTodo()
 	const {
 		control,
 		handleSubmit,
@@ -26,23 +31,46 @@ const useDetail = ({ id }: { id?: string }) => {
 	const navigation = useNavigation()
 	const title = useMemo(() => (id ? 'Update' : 'Create'), [])
 
-	const defaultValue = {}
-
-	const [colorTag, setColorTag] = useState()
-
 	const onPressSave = handleSubmit(values => {
 		const { description, title } = values
-		navigation.goBack()
+
+		if (id) {
+			// update
+			updateTodo(
+				{ id, color: colorTag, ...values },
+				{
+					onSuccess,
+				},
+			)
+		} else {
+			// create
+			addTodo(
+				{ title, description, color: colorTag },
+				{
+					onSuccess,
+				},
+			)
+		}
 	})
+
+	const onSuccess = () => {
+		navigation.goBack()
+	}
+
+	useEffect(() => {
+		if (data?.color) setColorTag(data.color)
+	}, [data])
 
 	return {
 		control,
-		defaultValue,
+		defaultValue: data,
 		isDirty,
 		onPressSave,
 		colorTag,
 		setColorTag,
 		title,
+		isLoading,
+		isSaving: isAddLoading || isUpdateLoading,
 	}
 }
 

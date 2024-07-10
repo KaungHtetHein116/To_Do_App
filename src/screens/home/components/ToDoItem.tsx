@@ -14,6 +14,7 @@ import { ITodo } from '@/api/axios/types'
 const ToDoItem = ({ item, index }: { item: ITodo; index: number }) => {
 	const { onPressCheckIcon, onPressDelete, onPressEdit } = useToDoItem({
 		id: item.id,
+		isCompleted: item.isCompleted,
 	})
 
 	const renderRightActions = () => {

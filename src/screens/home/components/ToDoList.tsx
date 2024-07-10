@@ -1,7 +1,7 @@
 import { View } from 'react-native'
 import React from 'react'
 import ToDoItem from './ToDoItem'
-import { Typography } from '@/components'
+import { LoadingIndicator, Typography } from '@/components'
 import { commonStyles } from '@/theme'
 import Animated, { LinearTransition } from 'react-native-reanimated'
 import { useHomeAnimation } from '@/context/HomeAnimationProvider'
@@ -15,6 +15,8 @@ const ToDoList = () => {
 	const renderItem = ({ item, index }: { item: any; index: number }) => {
 		return <ToDoItem item={item} index={index} />
 	}
+
+	if (isLoading) return <LoadingIndicator />
 
 	return (
 		<Animated.FlatList

@@ -1,4 +1,10 @@
-import { FormTextInput, Header, PrimaryButton, SafeView } from '@/components'
+import {
+	FormTextInput,
+	Header,
+	LoadingIndicator,
+	PrimaryButton,
+	SafeView,
+} from '@/components'
 import { HomeStackNavigatorParam } from '@/navigators/types'
 import { commonStyles, gutters, layout } from '@/theme'
 import { NativeStackScreenProps } from '@react-navigation/native-stack'
@@ -21,9 +27,13 @@ const Detail = ({
 		colorTag,
 		setColorTag,
 		title,
+		isLoading,
+		isSaving,
 	} = useDetail({
 		id: route.params?.id,
 	})
+
+	if (isLoading) return <LoadingIndicator />
 
 	return (
 		<SafeView>
@@ -55,6 +65,7 @@ const Detail = ({
 					onPress={onPressSave}
 					labelStyle={detailStyles.labelStyle}
 					disabled={!isDirty}
+					isLoading={isSaving}
 				/>
 			</View>
 		</SafeView>
