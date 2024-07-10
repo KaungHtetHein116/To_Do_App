@@ -2,7 +2,7 @@ import { useForm } from 'react-hook-form'
 import * as Yup from 'yup'
 import { yupResolver } from '@hookform/resolvers/yup'
 import { useNavigation } from '@react-navigation/native'
-import { useEffect, useMemo, useState } from 'react'
+import { useEffect, useMemo } from 'react'
 import { useAddTodo, useTodo, useUpdateTodo } from '@/api/hooks/useToDos'
 
 const resolver = yupResolver(
@@ -15,11 +15,11 @@ const resolver = yupResolver(
 			.required('Please enter description.')
 			.min(5, 'Description must be at least 5 characters long.')
 			.trim(),
+		color: Yup.string().required('Please select a color.'),
 	}),
 )
 
 const useDetail = ({ id }: { id?: string }) => {
-	const [colorTag, setColorTag] = useState('#FBFEFB')
 	const { data, isLoading } = useTodo(id)
 	const { mutate: addTodo, isPending: isAddLoading } = useAddTodo()
 	const { mutate: updateTodo, isPending: isUpdateLoading } = useUpdateTodo()
@@ -33,12 +33,12 @@ const useDetail = ({ id }: { id?: string }) => {
 	const title = useMemo(() => (id ? 'Update' : 'Create'), [])
 
 	const onPressSave = handleSubmit(values => {
-		const { description, title } = values
+		const { description, title, color } = values
 
 		if (id) {
 			// update
 			updateTodo(
-				{ id, color: colorTag, ...values },
+				{ id, ...values },
 				{
 					onSuccess,
 				},
@@ -46,7 +46,7 @@ const useDetail = ({ id }: { id?: string }) => {
 		} else {
 			// create
 			addTodo(
-				{ title, description, color: colorTag },
+				{ title, description, color },
 				{
 					onSuccess,
 				},
@@ -60,7 +60,6 @@ const useDetail = ({ id }: { id?: string }) => {
 
 	useEffect(() => {
 		if (data) {
-			setColorTag(data.color)
 			reset(data)
 		}
 	}, [data])
@@ -69,8 +68,6 @@ const useDetail = ({ id }: { id?: string }) => {
 		control,
 		isDirty,
 		onPressSave,
-		colorTag,
-		setColorTag,
 		title,
 		isLoading,
 		isSaving: isAddLoading || isUpdateLoading,
