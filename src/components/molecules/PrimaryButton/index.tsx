@@ -31,9 +31,10 @@ const PrimaryButton = ({
 			style={[
 				commonStyles.center,
 				primaryButtonStyles.container,
-				disabled && primaryButtonStyles.disabledStyle,
 				style,
+				disabled && primaryButtonStyles.disabledStyle,
 			]}
+			disabled={disabled}
 			{...props}
 		>
 			{isLoading ? (
