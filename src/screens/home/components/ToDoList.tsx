@@ -31,6 +31,7 @@ const ToDoList = () => {
 			contentContainerStyle={[
 				commonStyles.regularVPadding,
 				commonStyles.xxLargeBMargin,
+				commonStyles.flexGrow,
 			]}
 			style={[commonStyles.fill, commonStyles.flexGrow]}
 			data={toDolist}
