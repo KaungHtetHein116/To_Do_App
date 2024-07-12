@@ -1,4 +1,4 @@
-import { View } from 'react-native'
+import { RefreshControl, View } from 'react-native'
 import React from 'react'
 import ToDoItem from './ToDoItem'
 import { LoadingIndicator, Typography } from '@/components'
@@ -10,7 +10,7 @@ import { useTodos } from '@/api/hooks/useToDos'
 
 const ToDoList = () => {
 	const { scrollHandler } = useHomeAnimation()
-	const { data, isLoading } = useTodos()
+	const { data, isLoading, refetch } = useTodos()
 
 	const renderItem = ({ item, index }: { item: any; index: number }) => {
 		return <ToDoItem item={item} index={index} />
@@ -38,6 +38,9 @@ const ToDoList = () => {
 				<View style={[commonStyles.fill, commonStyles.center]}>
 					<Typography>{'All clear !!!'}</Typography>
 				</View>
+			}
+			refreshControl={
+				<RefreshControl onRefresh={refetch} refreshing={false} />
 			}
 		/>
 	)
