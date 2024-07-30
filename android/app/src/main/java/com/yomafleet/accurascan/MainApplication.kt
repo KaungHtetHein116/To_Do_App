@@ -1,4 +1,4 @@
-package com.todoapp
+package com.yomafleet.accurascan
 
 import android.app.Application
 import com.facebook.react.PackageList

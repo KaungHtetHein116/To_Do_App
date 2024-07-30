@@ -4,12 +4,19 @@ buildscript {
         minSdkVersion = 23
         compileSdkVersion = 34
         targetSdkVersion = 34
-        ndkVersion = "26.1.10909125"
+        ndkVersion = "23.1.7779620"
         kotlinVersion = "1.9.22"
     }
     repositories {
         google()
         mavenCentral()
+        jcenter()
+        maven { url 'https://jitpack.io/' }
+        maven { url 'https://developer.huawei.com/repo/' } // Add Huawei Maven
+        maven {
+            url 'https://jitpack.io'
+            credentials { username 'jp_45kf9tvkijvd9c7cf34mehj1b6' }
+        }
     }
     dependencies {
         classpath("com.android.tools.build:gradle")

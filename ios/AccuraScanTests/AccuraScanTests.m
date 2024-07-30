@@ -7,11 +7,11 @@
 #define TIMEOUT_SECONDS 600
 #define TEXT_TO_LOOK_FOR @"Welcome to React"
 
-@interface ToDoAppTests : XCTestCase
+@interface AccuraScanTests : XCTestCase
 
 @end
 
-@implementation ToDoAppTests
+@implementation AccuraScanTests
 
 - (BOOL)findSubviewInView:(UIView *)view matching:(BOOL (^)(UIView *view))test
 {

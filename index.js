@@ -9,6 +9,7 @@ import { name as appName } from './app.json'
 import App from './src/App'
 
 import startServer from '@/lib/miragejs/server'
+import Facematch from './accuraScan/App'
 
 if (window.server) {
 	window.server.shutdown()
@@ -16,4 +17,4 @@ if (window.server) {
 
 window.server = startServer()
 
-AppRegistry.registerComponent(appName, () => App)
+AppRegistry.registerComponent(appName, () => Facematch)

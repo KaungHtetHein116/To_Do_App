@@ -7,6 +7,7 @@ require Pod::Executable.execute_command('node', ['-p',
 
 platform :ios, min_ios_version_supported
 prepare_react_native_project!
+use_frameworks!
 
 linkage = ENV['USE_FRAMEWORKS']
 if linkage != nil
@@ -14,7 +15,7 @@ if linkage != nil
   use_frameworks! :linkage => linkage.to_sym
 end
 
-target 'ToDoApp' do
+target 'AccuraScan' do
   config = use_native_modules!
 
   use_react_native!(
@@ -23,9 +24,19 @@ target 'ToDoApp' do
     :app_path => "#{Pod::Config.instance.installation_root}/.."
   )
 
-  target 'ToDoAppTests' do
+  target 'AccuraScanTests' do
     inherit! :complete
     # Pods for testing
+  end
+
+  pre_install do |installer|
+    installer.pod_targets.each do |pod|
+      if pod.name.eql?('RNReanimated')
+        def pod.build_type;
+        Pod::BuildType.static_library
+        end
+      end
+    end
   end
 
   post_install do |installer|
