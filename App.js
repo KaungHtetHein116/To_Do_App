@@ -3,12 +3,12 @@ import * as React from 'react'
 /* eslint-disable react-native/no-inline-styles */
 import { NavigationContainer } from '@react-navigation/native'
 import { createNativeStackNavigator } from '@react-navigation/native-stack'
-import OCRScreen from './source/OCRScreen'
-import CardList from './source/CardList'
-import ResultScreen from './source/ResultScreen'
-import BarcodeScreen from './source/BarcodeScreen'
-import FirstScreen from './source/FirstScreen'
-import Facematch from './source/Facematch'
+import OCRScreen from './accuraScan/OCRScreen'
+import CardList from './accuraScan/CardList'
+import ResultScreen from './accuraScan/ResultScreen'
+import BarcodeScreen from './accuraScan/BarcodeScreen'
+import FirstScreen from './accuraScan/FirstScreen'
+import Facematch from './accuraScan/Facematch'
 
 const Stack = createNativeStackNavigator()
 
