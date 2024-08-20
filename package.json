@@ -18,7 +18,7 @@
 		"@reduxjs/toolkit": "^2.2.6",
 		"@tanstack/react-query": "^5.50.1",
 		"@tanstack/react-query-devtools": "^5.50.1",
-		"accurascan_kyc": "1.2.5-Sim",
+		"accurascan_kyc": "1.1.7",
 		"axios": "^1.7.2",
 		"date-fns": "^3.6.0",
 		"react": "18.2.0",
