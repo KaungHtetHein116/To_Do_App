@@ -26,3 +26,18 @@ buildscript {
 }
 
 apply plugin: "com.facebook.react.rootproject"
+
+// Add the allprojects block below
+allprojects {
+    repositories {
+        google()
+        mavenCentral()
+        // jcenter()
+        maven { url 'https://jitpack.io/' }
+        maven { url 'https://developer.huawei.com/repo/' } // Add Huawei Maven
+        maven {
+            url 'https://jitpack.io'
+            credentials { username 'jp_45kf9tvkijvd9c7cf34mehj1b6' }
+        }
+    }
+}
