@@ -2,7 +2,7 @@ PODS:
   - AccuraKYC_Sim (4.0.5):
     - AFNetworking (~> 4.0.0)
     - GoogleMLKit
-  - accurascan-kyc (1.2.5-Sim):
+  - accurascan-kyc (1.2.8):
     - AccuraKYC_Sim (= 4.0.5)
     - React-Core
   - AFNetworking (4.0.1):
@@ -1527,7 +1527,7 @@ EXTERNAL SOURCES:
 
 SPEC CHECKSUMS:
   AccuraKYC_Sim: 336a4fa00ca90e0b90c6fadf862a665cf4923e0e
-  accurascan-kyc: 2a0ad6827293ee92997cd4a5f5013a843ef3f853
+  accurascan-kyc: 960a7e5238b86021e99ab783dfad720751b87633
   AFNetworking: 3bd23d814e976cd148d7d44c3ab78017b744cd58
   boost: d3f49c53809116a5d38da093a8aa78bf551aed09
   DoubleConversion: 76ab83afb40bddeeee456813d9c04f67f78771b5
